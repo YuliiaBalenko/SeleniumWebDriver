@@ -20,14 +20,21 @@ public class ScreenShotOfFoundElement {
     @Test
 
     public void searchForElement() throws IOException {
+        String URL = "https://google.com";
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.get(URL);
+
+        /*String exePath ="/Users/yuliiabalenko/AQA/web_drivers/msedgedriver";
+        System.setProperty("webdriver.edge.driver", exePath);
+        driver = new EdgeDriver();
+        driver.get(URL);*/
+
 
         for (int i = 0; i < SEARCH_VALUE.length; i++) {
-            String URL = "https://google.com";
-            WebDriver driver = new ChromeDriver();
-            driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-            driver.get(URL);
             WebElement element = driver.findElement(By.name("q"));
+            element.clear();
             element.sendKeys(Arrays.asList(SEARCH_VALUE).get(i));
             element.submit();
             ListIterator<WebElement> itr = null;
@@ -43,14 +50,16 @@ public class ScreenShotOfFoundElement {
                 while (itr.hasNext()) {
                     toClick = itr.next();
                     if (toClick.getAttribute("href").contains(Arrays.asList(SITE_NAME).get(i))) {
-                        toClick.click();
                         flag = true;
                         Date d = new Date();
                         String FileName = "EvidenceOfFoundSite_" + d.toString()
                                 .replace(":", "_").replace(" ", "_") + ".png";
                         File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-                        FileHandler.copy(srcFile, new File("/Users/yuliiabalenko/Downloads/testScreenshot/" + FileName));
-                        System.out.println("The found site at page number: " + pageNumber);
+                        FileHandler.copy(srcFile, new File("/Users/yuliiabalenko/Downloads/testScreenshot/"
+                                + FileName));
+
+                        System.out.println("The found site " + Arrays.asList(SITE_NAME).get(i)
+                                + " at page number: " + pageNumber);
                         break;
                     }
                 }
@@ -60,19 +69,16 @@ public class ScreenShotOfFoundElement {
                     pageNumber++;
                     linkElements.clear();
                 } else if (isPresent == false) {
-                    System.out.println("No more Pages Available");
+                    System.out.println("The site " + Arrays.asList(SITE_NAME).get(i)
+                            + " is not found, no more Pages Available");
                     break;
                 }
             }
         }
+        driver.quit();
 
     }
 }
-
-        /*String exePath ="/Users/yuliiabalenko/AQA/web_drivers/msedgedriver";
-        System.setProperty("webdriver.edge.driver", exePath);
-        driver = new EdgeDriver();
-        driver.get(URL);*/
 
 
 
