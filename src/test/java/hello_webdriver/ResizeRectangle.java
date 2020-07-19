@@ -16,18 +16,18 @@ public class ResizeRectangle {
 
         WebElement element = driver.findElement(By.id("resizableBoxWithRestriction"));
         Dimension elementDimensions = element.getSize();
-        System.out.println("Initial Height: " + elementDimensions.height + " Initial Width: "+ elementDimensions.width);
+        System.out.println("Initial Height: " + elementDimensions.height + " Initial Width: " + elementDimensions.width);
 
         WebElement resizeElement = driver.findElement(By.xpath("//*[@id='resizableBoxWithRestriction']/span"));
         Actions actionsBigger = new Actions(driver);
         actionsBigger.dragAndDropBy(resizeElement, 100, 100).perform();
         Dimension biggerElementDimensions = element.getSize();
-        System.out.println("Height after increase: " + biggerElementDimensions.height + " Width after increase: "+ biggerElementDimensions.width);
+        System.out.println("Height after increase: " + biggerElementDimensions.height + " Width after increase: " + biggerElementDimensions.width);
 
         Actions actionsSmaller = new Actions(driver);
         actionsSmaller.dragAndDropBy(resizeElement, -200, -200).perform();
         Dimension smallerElementDimentions = element.getSize();
-        System.out.println("Height after decrease: " + smallerElementDimentions.height + " Width after decrease: "+ smallerElementDimentions.width);
+        System.out.println("Height after decrease: " + smallerElementDimentions.height + " Width after decrease: " + smallerElementDimentions.width);
         driver.quit();
     }
 }

@@ -19,18 +19,19 @@ public class ScreenShotOfRandomElements {
         driver.get(URL);
 
         List<WebElement> allElements = driver.findElements(By.xpath("//*[@id='verticalListContainer']/li"));
-        for (int i = 0; i < allElements.size()-1; i++) {
+        for (int i = 0; i < allElements.size() - 1; i++) {
             Random rand = new Random();
             int randomElement = rand.nextInt(allElements.size());
             if (!allElements.get(randomElement).getAttribute("class").contains("active")) {
                 allElements.get(randomElement).click();
-            }
-            else
+            } else
                 i--;
         }
         Date d = new Date();
-        String FileName = "3_elements_selected_" + d.toString().replace(":", "_").replace(" ", "_") + ".png";
-        File srcFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        FileHandler.copy(srcFile, new File("/Users/yuliiabalenko/Downloads/testScreenshot/"+FileName));
+        String FileName = "3_elements_selected_" + d.toString()
+                .replace(":", "_").replace(" ", "_") + ".png";
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        FileHandler.copy(srcFile, new File("/Users/yuliiabalenko/Downloads/testScreenshot/" + FileName));
+        driver.quit();
     }
 }
